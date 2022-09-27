@@ -124,14 +124,14 @@ def addAttendance():
     
 @app.route("/addAtt", methods=['GET','POST'])
 def addAtt():
-
+    print("checkpoint1")
     emp_id = request.form['empId']
     name = request.form['empName']
-
+    print("checkpoint2")
     today = date.today()
     date = today.strftime("%d/%m/%Y")
     check_in = today.strftime("%H:%M:%S")
-
+    print("checkpoint3")
 
     insert_sql = "INSERT INTO attendance VALUES (%s, %s, %s, %s)"
     cursor = db_conn.cursor()
