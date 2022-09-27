@@ -134,7 +134,7 @@ def addAtt():
     date = str(date)
     check_in = str(check_in)
 
-    insert_sql = "INSERT INTO attendance VALUES (%s, %s, %s, %s)"
+    insert_sql = "INSERT INTO attendance (emp_id, name, date, check_in) VALUES (%s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
     try:
