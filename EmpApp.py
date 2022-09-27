@@ -46,7 +46,7 @@ def addEmployee():
     except Exception as e:
         return str(e)
 
-@app.route("/addemp", methods=['POST'])
+@app.route("/addemp", methods=['GET','POST'])
 def AddEmp():
     emp_id = request.form['empId']
     name = request.form['name']
