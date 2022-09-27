@@ -155,27 +155,28 @@ def addAtt():
 
 @app.route("/updateAtt", methods=['GET','POST'])
 def updateAtt():
-
+    att_id = request.form['attId']
     emp_id = request.form['empId']
     name = request.form['empName']
+    date = request.form['date']
+    check_in = request.form['checkIn']
+    check_out = request.form['checkOut']
 
     today = datetime.today()
-    date = today.strftime("%d/%m/%Y")
-    check_in = today.strftime("%H:%M:%S")
-    date = str(date)
-    check_in = str(check_in)
+    check_out = today.strftime("%H:%M:%S")
+    check_out = str(check_out)
 
-    insert_sql = "INSERT INTO attendance (emp_id, name, date, check_in) VALUES (%s, %s, %s, %s)"
+    insert_sql = "INSERT INTO attendance VALUES (%s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
     try:
-        cursor.execute(insert_sql, (emp_id, name, date, check_in))
+        cursor.execute(insert_sql, (att_id, emp_id, name, date, check_in, check_out))
         db_conn.commit()
     finally:
         cursor.close()
 
     print("all modification done...")
-    return render_template('index.html')
+    return render_template('attendance.html')
 
 @app.route("/login", methods=['GET', 'POST'])
 def login():
