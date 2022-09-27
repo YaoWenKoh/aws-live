@@ -49,12 +49,12 @@ def addEmployee():
 @app.route("/addemp", methods=['GET','POST'])
 def AddEmp():
     emp_id = request.form['empId']
-    name = request.form['name']
-    email = request.form["email"]
-    password = request.form["password"]
-    phone_number = request.form["phone_number"]
-    pri_skill = request.form['pri_skill']
-    location = request.form['location']
+    name = request.form['empName']
+    email = request.form["empEmail"]
+    password = request.form["empPassword"]
+    phone_number = request.form["empPhoneNumber"]
+    pri_skill = request.form['empPriSkill']
+    location = request.form['empLocation']
     emp_image_file = request.files['emp_image_file']
 
     insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
