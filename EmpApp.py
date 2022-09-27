@@ -123,7 +123,7 @@ def addAttendance():
         return str(e)
     
 @app.route("/addAtt", methods=['GET','POST'])
-def AddAtt():
+def addAtt():
 
     emp_id = request.form['empId']
     name = request.form['empName']
