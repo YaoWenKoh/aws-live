@@ -178,7 +178,7 @@ def updateAtt():
     check_out = today.strftime("%H:%M:%S")
     check_out = str(check_out)
 
-    insert_sql = "INSERT INTO attendance VALUES (%s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE att_id=%s"
+    insert_sql = "INSERT INTO attendance VALUES (%s, %s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE att_id=%s"
     cursor = db_conn.cursor()
 
     try:
