@@ -80,9 +80,9 @@ def AddEmp():
     print("all modification done...")
     return render_template('AddEmpOutput.html', name=emp_name)
 
-@app.route("/login", methods=['GET', 'POST'])
+@app.route("/addatt", methods=['GET', 'POST'])
 def Login():
-    return render_template('login.html')
+    return render_template('addAttandance.html')
 
 @app.route("/register", methods=['POST'])
 def Register():

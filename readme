@@ -4,6 +4,9 @@
 #remove directory
 rm -rf aws-live
 
+#putty connection
+ec2-user@ec2-3-87-133-25.compute-1.amazonaws.com
+
 #!/bin/bash
 yum update -y
 yum install git -y
