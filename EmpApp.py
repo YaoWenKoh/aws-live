@@ -82,7 +82,7 @@ def AddEmp():
 
 @app.route("/login", methods=['GET', 'POST'])
 def Login():
-    return render_template('Login.html')
+    return render_template('login.html')
 
 @app.route("/register", methods=['POST'])
 def Register():
