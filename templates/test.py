@@ -123,13 +123,13 @@ def addEmp():
         except Exception as e:
             return str(e)
         if emp_cert_image.filename == "":
-            flash("Please select a file")
+            return("Please select a file")
         elif check_file_extension(emp_cert_image.filename, allow_image):
-            flash("Please select image file only!")
+            return("Please select image file only!")
         elif len(emp_training) == 0:
-            flash("Please select at least one training!")
+            return("Please select at least one training!")
         elif row != None:
-            flash("Please select a different email!")
+            return("Please select a different email!")
         else:
             # Add data to database #
             insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s, %s)"
@@ -244,11 +244,11 @@ def modifyEmployee():
             return str(e)
         if emp_cert_image.filename != "":
             if check_file_extension(emp_cert_image.filename, allow_image):
-                flash("Please select image file only!")
+                return("Please select image file only!")
         elif len(emp_training) == 0:
-            flash("Please select at least one training!")
+            return("Please select at least one training!")
         elif row != None:
-            flash("Please select a different email!")
+            return("Please select a different email!")
         else:
             # Prepare query to database #
             emp_training = ",".join(emp_training)

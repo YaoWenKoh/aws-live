@@ -117,23 +117,15 @@ def Attendance():
 
 @app.route("/addAttendance", methods=['GET', 'POST'])
 def addAttendance():
-    att_id = request.form['attId']
     emp_id = request.form['empId']
 
     sql_query = "SELECT * FROM employee WHERE emp_id = '" + emp_id + "'"
     cursor = db_conn.cursor()
-
-    sql_query1 = "SELECT * FROM attendance"
-    cursor1 =db_conn.cursor()
     try: 
         cursor.execute(sql_query)
-        cursor1.execute(sql_query1)
         employee = list(cursor.fetchone())
-        records = cursor1.fetchall()
-        att_id = attendance_id + int(len(records))
         cursor.close()
-        cursor1.close()
-        return render_template('addattendance.html', employee = employee, attId = att_id)
+        return render_template('addattendance.html', employee = employee)
     except Exception as e:
         return str(e)
 
