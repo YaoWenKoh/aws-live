@@ -3,6 +3,9 @@
 
 #remove directory
 rm -rf aws-live
+git clone https://github.com/YaoWenKoh/aws-live.git
+cd aws-live
+python3 EmpApp.py
 
 #putty connection
 ec2-user@ec2-3-87-133-25.compute-1.amazonaws.com
