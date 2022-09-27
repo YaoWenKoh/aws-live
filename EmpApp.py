@@ -1,3 +1,4 @@
+from crypt import methods
 from flask import Flask, render_template, request
 from pymysql import connections
 import os
@@ -23,8 +24,7 @@ table = 'employee'
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('AddEmp.html')
-
+    return render_template('index.html')
 
 @app.route("/about", methods=['POST'])
 def about():
@@ -80,6 +80,30 @@ def AddEmp():
     print("all modification done...")
     return render_template('AddEmpOutput.html', name=emp_name)
 
+@app.route("/login", methods=['GET', 'POST'])
+def Login():
+    return render_template('Login.html')
+
+@app.route("/register", methods=['POST'])
+def Register():
+    email = request.form['email']
+    password = request.form['password']
+
+
+    insert_sql = "INSERT INTO test VALUES (%s, %s)"
+    cursor = db_conn.cursor()
+    try:
+
+        cursor.execute(insert_sql, (email,password))
+        db_conn.commit()
+        object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                custombucket)
+
+    finally:
+        cursor.close()
+
+    print("all modification done...")
+    return render_template('test.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
