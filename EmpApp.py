@@ -181,8 +181,9 @@ def updateAtt():
 
     insert_sql = "INSERT INTO attendance VALUES (%s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
-
+    delete_sql = "DELETE FROM attendance WHERE att_id = '" + att_id + "'"
     try:
+        cursor.execute(delete_sql, (att_id))
         cursor.execute(insert_sql, (att_id, emp_id, name, date, check_in, check_out))
         db_conn.commit()
     finally:
