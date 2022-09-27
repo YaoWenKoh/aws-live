@@ -31,7 +31,7 @@ output = {}
 table = 'employee'
 
 employee_id = 1001
-
+attendance_id = 1
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -117,21 +117,29 @@ def Attendance():
 
 @app.route("/addAttendance", methods=['GET', 'POST'])
 def addAttendance():
+    att_id = request.form['attId']
     emp_id = request.form['empId']
 
     sql_query = "SELECT * FROM employee WHERE emp_id = '" + emp_id + "'"
     cursor = db_conn.cursor()
+
+    sql_query1 = "SELECT * FROM attendance"
+    cursor1 =db_conn.cursor()
     try: 
         cursor.execute(sql_query)
+        cursor1.execute(sql_query1)
         employee = list(cursor.fetchone())
+        records = cursor1.fetchall()
+        att_id = attendance_id + int(len(records))
         cursor.close()
-        return render_template('addattendance.html', employee = employee)
+        cursor1.close()
+        return render_template('addattendance.html', employee = employee, attId = att_id)
     except Exception as e:
         return str(e)
-    
+
 @app.route("/addAtt", methods=['GET','POST'])
 def addAtt():
-
+    att_id = request.form['attId']
     emp_id = request.form['empId']
     name = request.form['empName']
 
@@ -141,11 +149,11 @@ def addAtt():
     date = str(date)
     check_in = str(check_in)
 
-    insert_sql = "INSERT INTO attendance (emp_id, name, date, check_in) VALUES (%s, %s, %s, %s)"
+    insert_sql = "INSERT INTO attendance (att_id, emp_id, name, date, check_in) VALUES (%s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
     try:
-        cursor.execute(insert_sql, (emp_id, name, date, check_in))
+        cursor.execute(insert_sql, (att_id, emp_id, name, date, check_in))
         db_conn.commit()
     finally:
         cursor.close()
@@ -179,7 +187,7 @@ def updateAtt():
     check_out = today.strftime("%H:%M:%S")
     check_out = str(check_out)
 
-    insert_sql = "INSERT INTO attendance VALUES (%i, %s, %s, %s, %s, %s)"
+    insert_sql = "INSERT INTO attendance VALUES (%s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
     try:

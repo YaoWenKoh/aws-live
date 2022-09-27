@@ -6,6 +6,9 @@
     <form action="/addAtt" method="POST">
         {% if employee %}
         <div>
+            <input type="hidden" name="attId" value="{{attId}}" readonly>
+        </div>
+        <div>
             Employee ID:
             <input type="text" name="empId" value="{{employee[0]}}" readonly>
         </div>
