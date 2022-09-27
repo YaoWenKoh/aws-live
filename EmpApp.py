@@ -6,6 +6,7 @@ import os
 import boto3
 from config import *
 from datetime import datetime
+from flask_session import Session
 
 app = Flask(__name__)
 app.config["SESSION_PERMANENT"] = False
