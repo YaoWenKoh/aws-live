@@ -1,0 +1,13 @@
+{% include 'header.html' %}
+<body>
+    <h4>Employee List</h4>
+    {% for row in attendances %}
+    <tr>
+        <td>{{row[0]}}</td>
+        <td>{{row[1]}}</td>
+        <td>{{row[2]}}</td>
+    </tr>
+{% endfor %}
+</body>
+
+{% include 'footer.html' %}
