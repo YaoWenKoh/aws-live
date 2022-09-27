@@ -1,0 +1,37 @@
+{% include 'header.html' %}
+
+<body>
+    <h4>Attandance</h4>
+
+    <form action="/updateAtt" method="POST">
+        {% if attendance %}
+        <div>
+            Employee ID:
+            <input type="text" name="empId" value="{{employee[0]}}" readonly>
+        </div>
+        <div>
+            Employee Name:
+            <input type="text" name="empName" value="{{employee[1]}}" readonly>
+        </div>
+        <div>
+            Date:
+            <input type="text" name="date" value="{{attendance[3]}}" readonly>
+        </div>
+        <div>
+            Check-In Time:
+            <input type="text" name="checkIn" value="{{attendance[4]}}" readonly>
+        </div>
+        <div>
+            Current Time:
+            <script>
+                time = new Date().toLocaleTimeString();
+                document.write(time);
+            </script>
+        </div>
+        <div>
+            <button type="submit" name="upAtt">Check-Out</button>
+        </div>
+        {% endif %}
+    </form>
+</body>
+{% include 'footer.html' %}
