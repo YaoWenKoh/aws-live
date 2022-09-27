@@ -1,6 +1,6 @@
 from crypt import methods
 from unicodedata import name
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, session, flash
 from pymysql import connections
 import os
 import boto3
@@ -8,6 +8,12 @@ from config import *
 from datetime import datetime
 
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
+# For Flash #
+app.secret_key = "secret" 
 
 bucket = custombucket
 region = customregion
@@ -146,5 +152,62 @@ def addAtt():
     print("all modification done...")
     return render_template('index.html')
 
+<<<<<<< HEAD
+=======
+@app.route("/updateAtt", methods=['GET','POST'])
+def updateAtt():
+
+    emp_id = request.form['empId']
+    name = request.form['empName']
+
+    today = datetime.today()
+    date = today.strftime("%d/%m/%Y")
+    check_in = today.strftime("%H:%M:%S")
+    date = str(date)
+    check_in = str(check_in)
+
+    insert_sql = "INSERT INTO attendance (emp_id, name, date, check_in) VALUES (%s, %s, %s, %s)"
+    cursor = db_conn.cursor()
+
+    try:
+        cursor.execute(insert_sql, (emp_id, name, date, check_in))
+        db_conn.commit()
+    finally:
+        cursor.close()
+
+    print("all modification done...")
+    return render_template('index.html')
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+      # if form is submited
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        sql_query = "SELECT * FROM employee WHERE email ='" + email + "'"
+        cursor = db_conn.cursor()
+        try:
+            cursor.execute(sql_query)
+            row = cursor.fetchone()
+            if row != None and row[3] == password:
+                # record the user name
+                session["id"] = row[0]
+                session["name"] = row[1]
+                cursor.close()
+                # redirect to the main page
+                return redirect("/")
+            else:
+                flash("Invalid email or password. Please try again.")
+        except Exception as e:
+            return str(e)
+    return render_template('login.html')
+
+@app.route("/logout")
+def logout():
+    session["id"] = None
+    session["name"] = None
+    return redirect("/")
+
+>>>>>>> adf15e1b09ff77ab8dbc77083a21161d2d813fcd
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
