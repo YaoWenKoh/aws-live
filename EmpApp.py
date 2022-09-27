@@ -131,7 +131,8 @@ def addAtt():
     today = datetime.today()
     date = today.strftime("%d/%m/%Y")
     check_in = today.strftime("%H:%M:%S")
-
+    date = str(date)
+    check_in = str(check_in)
 
     insert_sql = "INSERT INTO attendance VALUES (%s, %s, %s, %s)"
     cursor = db_conn.cursor()
