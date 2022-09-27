@@ -34,7 +34,7 @@ def home():
 def about():
     return render_template('www.intellipaat.com')
 
-@app.route("/Employee", methods=['GET','POST'])
+@app.route("/employee", methods=['GET','POST'])
 def employee():
     sql_query = "SELECT * FROM employee"
     cursor = db_conn.cursor()
@@ -116,6 +116,25 @@ def AddEmp():
 
     print("all modification done...")
     return render_template('index.html')
+
+@app.route("/attendance", methods=['GET','POST'])
+def Attendance():
+    sql_query = "SELECT * FROM employee"
+    cursor = db_conn.cursor()
+    try: 
+        # Extract employee records #
+        cursor.execute(sql_query)
+        records = list(cursor.fetchall())
+
+        # Put records into an employee list & Convert rows inside records from tuple to list#
+        employees = []
+        for rows in records:
+            employees.append(list(rows))
+
+        cursor.close()
+        return render_template('attendance.html', employees = employees)
+    except Exception as e:
+        return str(e)
 
 @app.route("/addAttendance", methods=['GET', 'POST'])
 def addAttendance():
