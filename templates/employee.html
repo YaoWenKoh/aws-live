@@ -1,0 +1,19 @@
+{% include 'header.html' %}
+<body>
+    <h4>Employee List</h4>
+    {% for row in employees %}
+    <tr>
+        <td>{{row[0]}}</td>
+        <td>{{row[1]}}</td>
+        <td>{{row[2]}}</td>
+        <td>
+            <form action="/deleteEmp" method="POST"id="deleteEmployee">
+                <input type="hidden" name="empId" value="{{row[0]}}">
+                <button type="submit" name="delete" >Attendance</button>
+            </form>
+        </td>
+    </tr>
+{% endfor %}
+</body>
+
+{% include 'footer.html' %}

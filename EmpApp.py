@@ -34,6 +34,25 @@ def home():
 def about():
     return render_template('www.intellipaat.com')
 
+@app.route("/Employee", methods=['GET','POST'])
+def employee():
+    sql_query = "SELECT * FROM employee"
+    cursor = db_conn.cursor()
+    try: 
+        # Extract employee records #
+        cursor.execute(sql_query)
+        records = list(cursor.fetchall())
+
+        # Put records into an employee list & Convert rows inside records from tuple to list#
+        employees = []
+        for rows in records:
+            employees.append(list(rows))
+
+        cursor.close()
+        return render_template('Employee.html', employees = employees)
+    except Exception as e:
+        return str(e)
+        
 @app.route("/addEmployee", methods=['GET', 'POST'])
 def addEmployee():
     # Setting employee id automatically #
@@ -100,7 +119,9 @@ def AddEmp():
 
 @app.route("/addAttendance", methods=['GET', 'POST'])
 def addAttendance():
-    sql_query = "SELECT * FROM employee"
+    emp_id = request.form['empId']
+
+    sql_query = "SELECT * FROM employee WHERE emp_id = '" + emp_id + "'"
     cursor = db_conn.cursor()
     try: 
         cursor.execute(sql_query)
@@ -110,7 +131,7 @@ def addAttendance():
     except Exception as e:
         return str(e)
     
-@app.route("/addatt", methods=['GET','POST'])
+@app.route("/addAtt", methods=['GET','POST'])
 def AddAtt():
 
     emp_id = request.form['empId']
