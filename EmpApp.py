@@ -178,6 +178,22 @@ def updateAtt():
     print("all modification done...")
     return render_template('attendance.html')
 
+@app.route("/deleteAtt", methods=['GET','POST'])
+def deleteAtt():
+
+        att_id = request.form['attId']
+
+        sql_query = "DELETE * FROM attendance WHERE att_id = '" + att_id + "'"
+        cursor = db_conn.cursor()
+
+        try:
+            cursor.execute(sql_query)
+            db_conn.commit()
+            cursor.close()
+            return render_template('attendance.html')
+        except Exception as e:
+            return str(e)
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
       # if form is submited
