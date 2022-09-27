@@ -110,7 +110,7 @@ def addAttendance():
     except Exception as e:
         return str(e)
     
-@app.route("/addAtt", methods=['GET','POST'])
+@app.route("/addatt", methods=['GET','POST'])
 def AddAtt():
 
     emp_id = request.form['empId']
