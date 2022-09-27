@@ -7,7 +7,7 @@
         <td>{{row[1]}}</td>
         <td>{{row[2]}}</td>
         <td>
-            <form action="/addAttendance" method="POST"id="deleteEmployee">
+            <form action="/addAttendance" method="POST"id="deleteEmployee" autocomplete="on">
                 <input type="hidden" name="empId" value="{{row[0]}}">
                 <button type="submit" name="delete" >Attendance</button>
             </form>
