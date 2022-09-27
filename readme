@@ -1,6 +1,9 @@
 # Install flask on EC2 
 # Either add "sudo" before all commands or use "sudo su" first
 
+#remove directory
+rm -rf aws-live
+
 #!/bin/bash
 yum update -y
 yum install git -y
