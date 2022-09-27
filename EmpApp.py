@@ -1,9 +1,11 @@
 from crypt import methods
+from unicodedata import name
 from flask import Flask, render_template, request
 from pymysql import connections
 import os
 import boto3
 from config import *
+from datetime import date
 
 app = Flask(__name__)
 
@@ -96,29 +98,44 @@ def AddEmp():
     print("all modification done...")
     return render_template('index.html')
 
-@app.route("/addatt", methods=['GET', 'POST'])
+@app.route("/addAttandance", methods=['GET', 'POST'])
 def Login():
-    return render_template('addAttandance.html')
+    emp_id = request.form['empId']
 
-@app.route("/register", methods=['POST'])
-def Register():
-    email = request.form['email']
-    password = request.form['password']
-
-    insert_sql = "INSERT INTO test VALUES (%s, %s)"
+    sql_query = "SELECT * FROM employee WHERE emp_id = '" + emp_id + "'"
     cursor = db_conn.cursor()
+    try: 
+        cursor.execute(sql_query)
+        employee = list(cursor.fetchone())
+        cursor.close()
+        return render_template('addattendance.html', employee = employee)
+    except Exception as e:
+        return str(e)
+    
+@app.route("/addAtt", methods=['GET','POST'])
+def AddEmp():
+
+    emp_id = request.form['empId']
+    name = request.form['empName']
+
+    today = date.today()
+    date = today.strftime("%d/%m/%Y")
+    check_in = today.strftime("%H:%M:%S")
+
+
+    insert_sql = "INSERT INTO attendance VALUES (%s, %s, %s, %s)"
+    cursor = db_conn.cursor()
+
     try:
 
-        cursor.execute(insert_sql, (email,password))
+        cursor.execute(insert_sql, (emp_id, name, date, check_in))
         db_conn.commit()
-        object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
-                custombucket)
 
     finally:
         cursor.close()
 
     print("all modification done...")
-    return render_template('test.html')
+    return render_template('index.html')
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
