@@ -169,7 +169,6 @@ def updateAttendance():
 
 @app.route("/updateAtt", methods=['GET','POST'])
 def updateAtt():
-    att_id = request.form['attId']
     emp_id = request.form['empId']
     name = request.form['empName']
     date = request.form['date']
@@ -180,11 +179,11 @@ def updateAtt():
     check_out = today.strftime("%H:%M:%S")
     check_out = str(check_out)
 
-    insert_sql = "INSERT INTO attendance VALUES (%s, %s, %s, %s, %s, %s)"
+    insert_sql = "INSERT INTO attendance (emp_id, name, date, check_in, check_out) VALUES (%s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
     try:
-        cursor.execute(insert_sql, (att_id, emp_id, name, date, check_in, check_out))
+        cursor.execute(insert_sql, (emp_id, name, date, check_in, check_out))
         db_conn.commit()
     finally:
         cursor.close()
