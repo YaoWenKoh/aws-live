@@ -100,7 +100,7 @@ def AddEmp():
 
 @app.route("/addAttendance", methods=['GET', 'POST'])
 def addAttendance():
-    sql_query = "SELECT * FROM employee WHERE emp_id ="
+    sql_query = "SELECT * FROM employee"
     cursor = db_conn.cursor()
     try: 
         cursor.execute(sql_query)
