@@ -6,9 +6,6 @@
     <form action="/updateAtt" method="POST">
         {% if attendance %}
         <div>
-            <input type="hidden" name="attId" value="{{attendance[0]}}" readonly>
-        </div>
-        <div>
             Employee ID:
             <input type="text" name="empId" value="{{attendance[1]}}" readonly>
         </div>
