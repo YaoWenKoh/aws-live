@@ -113,7 +113,7 @@ def Login():
         return str(e)
     
 @app.route("/addAtt", methods=['GET','POST'])
-def AddEmp():
+def AddAtt():
 
     emp_id = request.form['empId']
     name = request.form['empName']
