@@ -108,7 +108,7 @@ def addAttendance():
         cursor.execute(sql_query)
         employee = list(cursor.fetchone())
         cursor.close()
-        return render_template('addattendance.html', employee = employee)
+        return render_template('addattendance.html', employee = employee, empId = emp_id)
     except Exception as e:
         return str(e)
     
