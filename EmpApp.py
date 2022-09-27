@@ -1,6 +1,6 @@
 from crypt import methods
 from unicodedata import name
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, session, flash
 from pymysql import connections
 import os
 import boto3
@@ -8,6 +8,12 @@ from config import *
 from datetime import datetime
 
 app = Flask(__name__)
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
+# For Flash #
+app.secret_key = "secret" 
 
 bucket = custombucket
 region = customregion
@@ -169,5 +175,36 @@ def updateAtt():
 
     print("all modification done...")
     return render_template('index.html')
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+      # if form is submited
+    if request.method == "POST":
+        email = request.form.get("email")
+        password = request.form.get("password")
+        sql_query = "SELECT * FROM employee WHERE email ='" + email + "'"
+        cursor = db_conn.cursor()
+        try:
+            cursor.execute(sql_query)
+            row = cursor.fetchone()
+            if row != None and row[3] == password:
+                # record the user name
+                session["id"] = row[0]
+                session["name"] = row[1]
+                cursor.close()
+                # redirect to the main page
+                return redirect("/")
+            else:
+                flash("Invalid email or password. Please try again.")
+        except Exception as e:
+            return str(e)
+    return render_template('login.html')
+
+@app.route("/logout")
+def logout():
+    session["id"] = None
+    session["name"] = None
+    return redirect("/")
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
