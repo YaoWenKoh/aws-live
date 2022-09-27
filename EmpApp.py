@@ -89,7 +89,6 @@ def Register():
     email = request.form['email']
     password = request.form['password']
 
-
     insert_sql = "INSERT INTO test VALUES (%s, %s)"
     cursor = db_conn.cursor()
     try:
