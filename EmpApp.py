@@ -131,7 +131,6 @@ def addAttendance():
 
 @app.route("/addAtt", methods=['GET','POST'])
 def addAtt():
-    att_id = request.form['attId']
     emp_id = request.form['empId']
     name = request.form['empName']
 
@@ -141,11 +140,11 @@ def addAtt():
     date = str(date)
     check_in = str(check_in)
 
-    insert_sql = "INSERT INTO attendance (att_id, emp_id, name, date, check_in) VALUES (%s, %s, %s, %s, %s)"
+    insert_sql = "INSERT INTO attendance (emp_id, name, date, check_in) VALUES (%s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
     try:
-        cursor.execute(insert_sql, (att_id, emp_id, name, date, check_in))
+        cursor.execute(insert_sql, (emp_id, name, date, check_in))
         db_conn.commit()
     finally:
         cursor.close()
