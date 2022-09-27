@@ -49,7 +49,7 @@ def employee():
             employees.append(list(rows))
 
         cursor.close()
-        return render_template('Employee.html', employees = employees)
+        return render_template('employee.html', employees = employees)
     except Exception as e:
         return str(e)
         
