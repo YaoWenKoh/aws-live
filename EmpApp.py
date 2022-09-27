@@ -173,7 +173,6 @@ def updateAtt():
     name = request.form['empName']
     date = request.form['date']
     check_in = request.form['checkIn']
-    check_out = request.form['checkOut']
 
     today = datetime.today()
     check_out = today.strftime("%H:%M:%S")
