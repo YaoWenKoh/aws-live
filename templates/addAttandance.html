@@ -1,3 +1,39 @@
 {% include 'header.html' %}
 
+<body>
+    <h4>Attandance</h4>
+
+    <form action="/addatt" autocomplete="on" method="POST">
+        {% if employee %}
+        <div>
+            Employee ID:
+            <input type="text" name="empId" value="{{employee[0]}}" disabled>
+        </div>
+        <div>
+            Employee Name:
+            <input type="text" name="empName" value="{{ emp_name }}" disabled>
+        </div>
+        <div>
+            Location:
+            <input type="text" name="empLocation" value="{{employee[7]}}" disabled>
+        </div>
+        <div>
+            Current Date:
+            <script>
+                date = new Date().toLocaleDateString();
+                document.write(date);
+            </script>
+        </div>
+        <div>
+            Current Time:
+            <script>
+                time = new Date().toLocaleTimeString();
+                document.write(time);
+            </script>
+        </div>
+        <div>
+            <button type="submit" name="attCheck">Check</button>
+        </div>
+    </form>
+</body>
 {% include 'footer.html' %}

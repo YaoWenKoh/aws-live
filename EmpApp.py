@@ -21,6 +21,8 @@ db_conn = connections.Connection(
 output = {}
 table = 'employee'
 
+employee_id = 1001
+
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -33,14 +35,16 @@ def about():
 
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
-    emp_id = request.form['emp_id']
-    first_name = request.form['first_name']
-    last_name = request.form['last_name']
+    emp_id = request.form['empId']
+    name = request.form['name']
+    email = request.form["email"]
+    password = request.form["password"]
+    phone_number = request.form["phone_number"]
     pri_skill = request.form['pri_skill']
     location = request.form['location']
     emp_image_file = request.files['emp_image_file']
 
-    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s)"
+    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
 
     if emp_image_file.filename == "":
@@ -48,9 +52,8 @@ def AddEmp():
 
     try:
 
-        cursor.execute(insert_sql, (emp_id, first_name, last_name, pri_skill, location))
+        cursor.execute(insert_sql, (emp_id, name, email, password, phone_number, pri_skill, location))
         db_conn.commit()
-        emp_name = "" + first_name + " " + last_name
         # Uplaod image file in S3 #
         emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
         s3 = boto3.resource('s3')
@@ -78,7 +81,7 @@ def AddEmp():
         cursor.close()
 
     print("all modification done...")
-    return render_template('AddEmpOutput.html', name=emp_name)
+    return render_template('index.html')
 
 @app.route("/addatt", methods=['GET', 'POST'])
 def Login():
