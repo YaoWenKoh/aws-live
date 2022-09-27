@@ -98,8 +98,8 @@ def AddEmp():
     print("all modification done...")
     return render_template('index.html')
 
-@app.route("/addAttandance", methods=['GET', 'POST'])
-def Login():
+@app.route("/addAttendance", methods=['GET', 'POST'])
+def addAttendance():
     emp_id = request.form['empId']
 
     sql_query = "SELECT * FROM employee WHERE emp_id = '" + emp_id + "'"
