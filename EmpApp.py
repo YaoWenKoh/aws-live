@@ -152,8 +152,6 @@ def addAtt():
     print("all modification done...")
     return render_template('index.html')
 
-<<<<<<< HEAD
-=======
 @app.route("/updateAtt", methods=['GET','POST'])
 def updateAtt():
 
@@ -208,6 +206,5 @@ def logout():
     session["name"] = None
     return redirect("/")
 
->>>>>>> adf15e1b09ff77ab8dbc77083a21161d2d813fcd
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
