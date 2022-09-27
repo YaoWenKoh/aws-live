@@ -32,7 +32,20 @@ def home():
 def about():
     return render_template('www.intellipaat.com')
 
-
+@app.route("/addEmployee", methods=['GET', 'POST'])
+def addEmployee():
+    # Setting employee id automatically #
+    sql_query = "SELECT * FROM employee"
+    cursor = db_conn.cursor()
+    try: 
+        cursor.execute(sql_query)
+        records = cursor.fetchall()
+        emp_id = employee_id + int(len(records))
+        cursor.close()
+        return render_template('AddEmployee.html', empId = emp_id)
+    except Exception as e:
+        return str(e)
+        
 @app.route("/addemp", methods=['POST'])
 def AddEmp():
     emp_id = request.form['empId']
