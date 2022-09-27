@@ -182,7 +182,7 @@ def updateAtt():
     cursor = db_conn.cursor()
 
     try:
-        cursor.execute(insert_sql, (emp_id, name, date, check_in, check_out, att_id ))
+        cursor.execute(insert_sql, (att_id, emp_id, name, date, check_in, check_out))
         db_conn.commit()
     finally:
         cursor.close()
