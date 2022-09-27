@@ -91,7 +91,7 @@ def AddEmp():
 
 @app.route("/attendance", methods=['GET','POST'])
 def Attendance():
-    sql_query = "SELECT * FROM employee"
+    sql_query = "SELECT * FROM attendance"
     cursor = db_conn.cursor()
     try: 
         # Extract employee records #
@@ -99,12 +99,12 @@ def Attendance():
         records = list(cursor.fetchall())
 
         # Put records into an employee list & Convert rows inside records from tuple to list#
-        employees = []
+        attendances = []
         for rows in records:
-            employees.append(list(rows))
+            attendances.append(list(rows))
 
         cursor.close()
-        return render_template('attendance.html', employees = employees)
+        return render_template('attendance.html', attendances = attendances)
     except Exception as e:
         return str(e)
 
@@ -148,3 +148,7 @@ def addAtt():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=80, debug=True)
+
+@app.route("/viewAttendance", methods=['GET','POST'])
+def viewAttendance():
+
