@@ -154,7 +154,7 @@ def addAtt():
     return render_template('index.html')
 
 @app.route("/updateAttendance", methods=['GET', 'POST'])
-def addAttendance():
+def updateAttendance():
     att_id = request.form['attId']
 
     sql_query = "SELECT * FROM attendance WHERE att_id = '" + att_id + "'"
