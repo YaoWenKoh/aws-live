@@ -108,7 +108,7 @@
                     <tr>
                         <th class="col-md-2">Attendance ID</th>
                         <th class="col-md-3">Employee ID</th>
-                        <th class="col-md-5">Employee Name</th>
+                        <th class="col-md-3">Employee Name</th>
                         <th class="col-md-2">Date</th>
                         <th class="col-md-2">Check In Time</th>
                         <th class="col-md-2">Check Out Time</th>
@@ -130,6 +130,8 @@
                                 <input type="hidden" name="attId" value="{{row[0]}}">
                                 <button type="submit" name="update">Update</button>
                             </form>
+                        </td>
+                        <td>
                             <form action="/deleteAtt" method="POST" id="deleteAtt" autocomplete="on">
                                 <input type="hidden" name="attId" value="{{row[0]}}">
                                 <button type="submit" name="delete">Delete</button>
