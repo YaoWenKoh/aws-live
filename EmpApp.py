@@ -118,7 +118,7 @@ def Attendance():
 @app.route("/addAttendance", methods=['GET', 'POST'])
 def addAttendance():
     emp_id = request.form['empId']
-
+    
     sql_query = "SELECT * FROM employee WHERE emp_id = '" + emp_id + "'"
     cursor = db_conn.cursor()
     try: 
@@ -178,11 +178,11 @@ def updateAtt():
     check_out = today.strftime("%H:%M:%S")
     check_out = str(check_out)
 
-    insert_sql = "INSERT INTO attendance VALUES (%s, %s, %s, %s, %s, %s) ON DUPLICATE KEY UPDATE att_id=VALUES(%s)"
+    update_sql = "UPDATE attendance SET emp_id ='" + emp_id + "', emp_name ='" + name + "', date ='" + date + "', check_in ='" + check_in + "', check_out ='" + check_out + "' WHERE att_id ='" + att_id + "'"
     cursor = db_conn.cursor()
 
     try:
-        cursor.execute(insert_sql, (att_id, emp_id, name, date, check_in, check_out))
+        cursor.execute(update_sql)
         db_conn.commit()
     finally:
         cursor.close()
