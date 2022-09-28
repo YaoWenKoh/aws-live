@@ -201,7 +201,7 @@ def deleteAttendance():
         cursor.execute(sql_query)
         attendance = list(cursor.fetchone())
         cursor.close()
-        return render_template('updateattendance.html', attendance = attendance)
+        return redirect(url_for('Attendance', attendance = attendance))
     except Exception as e:
         return str(e)
 
