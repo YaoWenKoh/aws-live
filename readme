@@ -19,7 +19,7 @@ pip3 install flask
 pip3 install pymysql
 pip3 install boto3
 pip3 install Flask-Session
-timedatectl set-timezone Kuala_Lumpur
+timedatectl set-timezone Asia/Kuala_Lumpur
 python3 EmpApp.py
 
 
