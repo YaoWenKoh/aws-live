@@ -1,9 +1,8 @@
 {% include 'header.html' %}
 
 <body>
-    <h4>Attandance</h4>
+    <h4>Add Employee</h4>
     <div class="col-md-11 shadow rounded m-5 bg-white">
-        {% if employee %}
         <form action="/addemp" autocomplete="on" method="POST" enctype="multipart/form-data">
             <div class="m-5">
                 <label for="empId">Employee ID</label>
@@ -35,7 +34,6 @@
             </div>
             <button type="submit" class="btn btn-primary m-5">Add Employee</button>
         </form>
-        {% endif %}
     </div>
 </body>
 {% include 'footer.html' %}
