@@ -84,7 +84,7 @@ def addEmployee():
         return str(e)
 
 @app.route("/addemp", methods=['GET','POST'])
-def AddEmp():
+def addemp():
     emp_id = request.form['empId']
     name = request.form['empName']
     email = request.form["empEmail"]
