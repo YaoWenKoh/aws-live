@@ -98,6 +98,20 @@ def AddEmp():
     print("all modification done...")
     return render_template('index.html')
 
+@app.route("/viewEmployee", methods=['GET', 'POST'])
+def viewEmployee():
+    emp_id = request.form['empId']
+    
+    sql_query = "SELECT * FROM employee WHERE emp_id = '" + emp_id + "'"
+    cursor = db_conn.cursor()
+    try: 
+        cursor.execute(sql_query)
+        employee = list(cursor.fetchone())
+        cursor.close()
+        return render_template('viewemployee.html', employee = employee)
+    except Exception as e:
+        return str(e)
+
 @app.route("/updateEmployee", methods=['GET', 'POST'])
 def updateEmployee():
     emp_id = request.form['empId']
@@ -311,6 +325,8 @@ def login():
         except Exception as e:
             return str(e)
     return render_template('login.html')
+
+
 
 @app.route("/logout")
 def logout():
