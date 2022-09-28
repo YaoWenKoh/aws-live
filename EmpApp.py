@@ -376,24 +376,16 @@ def login():
 
 @app.route("/portfolio")
 def portfolio():
-    emp_id = request.form['empId']
-    
-    sql_query = "SELECT * FROM employee WHERE emp_id = '" + emp_id + "'"
-    cursor = db_conn.cursor()
-    try: 
-        cursor.execute(sql_query)
-        employee = list(cursor.fetchone())
+
+    profile = ["2104900.jpg", "2105038.jpg"]
+    picList = []
+    # Extract employee cert image #
+    for pic in profile:
         public_url = s3_client.generate_presigned_url('get_object', 
-                                                                Params = {'Bucket': custombucket, 
-                                                                            'Key': employee[7]})
-
-        employee.append(public_url)
-        employee.append("checked")
-
-        cursor.close()
-        return render_template('viewemployee.html', employee = employee)
-    except Exception as e:
-        return str(e)
+                                                        Params = {'Bucket': custombucket, 
+                                                                    'Key': pic})
+        picList.append(public_url)
+    return render_template('Portfolio.html', picList = picList)
 
 @app.route("/logout")
 def logout():
