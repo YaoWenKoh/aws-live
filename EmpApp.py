@@ -122,7 +122,7 @@ def updateEmp():
     pri_skill = request.form['priSkill']
     location =  request.form['location']
 
-    update_sql = "UPDATE attendance SET  name ='" + name + "', email ='" + email + "', password ='" + password + "', phoneNumber ='" + phoneNumber + "', priSkill ='" + pri_skill + "', location ='" + location + "' WHERE emp_id ='" + emp_id + "'"
+    update_sql = "UPDATE employee SET  name ='" + name + "', email ='" + email + "', password ='" + password + "', phoneNumber ='" + phoneNumber + "', priSkill ='" + pri_skill + "', location ='" + location + "' WHERE emp_id ='" + emp_id + "'"
     cursor = db_conn.cursor()
 
     try:
