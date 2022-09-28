@@ -376,8 +376,24 @@ def login():
 
 @app.route("/portfolio")
 def portfolio():
+    emp_id = request.form['empId']
+    
+    sql_query = "SELECT * FROM employee WHERE emp_id = '" + emp_id + "'"
+    cursor = db_conn.cursor()
+    try: 
+        cursor.execute(sql_query)
+        employee = list(cursor.fetchone())
+        public_url = s3_client.generate_presigned_url('get_object', 
+                                                                Params = {'Bucket': custombucket, 
+                                                                            'Key': employee[7]})
 
-    return render_template('portfolio.html')
+        employee.append(public_url)
+        employee.append("checked")
+
+        cursor.close()
+        return render_template('viewemployee.html', employee = employee)
+    except Exception as e:
+        return str(e)
 
 @app.route("/logout")
 def logout():
