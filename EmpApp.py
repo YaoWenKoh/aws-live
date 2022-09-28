@@ -385,7 +385,7 @@ def portfolio():
                                                         Params = {'Bucket': custombucket, 
                                                                     'Key': pic})
         picList.append(public_url)
-    return render_template('Portfolio.html', picList = picList)
+    return render_template('portfolio.html', picList = picList)
 
 @app.route("/logout")
 def logout():
