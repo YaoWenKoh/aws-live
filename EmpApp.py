@@ -99,6 +99,7 @@ def AddEmp():
     
     try:
         image_file_name_in_s3 = "employee/_image_file" + str(emp_id) + get_file_extension(profile.filename)
+        print(type(get_file_extension(profile.filename)))
         cursor.execute(insert_sql, (emp_id, name, email, password, phone_number, pri_skill, location, image_file_name_in_s3))
         db_conn.commit()
         try:
