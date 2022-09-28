@@ -106,13 +106,13 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th class="col-md-1">Attendance ID</th>
-                        <th class="col-md-1">Employee ID</th>
-                        <th class="col-md-1">Employee Name</th>
-                        <th class="col-md-1">Date</th>
-                        <th class="col-md-1">Check In Time</th>
-                        <th class="col-md-1">Check Out Time</th>
-                        <th class="col-md-1">Action</th>
+                        <th class="col-md-2">Attendance ID</th>
+                        <th class="col-md-2">Employee ID</th>
+                        <th class="col-md-2">Employee Name</th>
+                        <th class="col-md-2">Date</th>
+                        <th class="col-md-2">Check In Time</th>
+                        <th class="col-md-2">Check Out Time</th>
+                        <th class="col-md-2">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -129,11 +129,11 @@
                                 <input type="hidden" name="attId" value="{{row[0]}}">
                                 <button type="submit" name="view" class="btn btn-secondary btn-sm">View</button>
                             </form>
-                            <form action="/updateAttendance" method="POST" id="updateAttendance" autocomplete="on">
+                            <form action="/updateAttendance" method="POST" class="d-inline" autocomplete="on">
                                 <input type="hidden" name="attId" value="{{row[0]}}">
                                 <button type="submit" name="update" class="btn btn-warning btn-sm">Update</button>
                             </form>
-                            <form action="/deleteAttendance" method="POST" id="deleteAttendance" autocomplete="on">
+                            <form action="/deleteAttendance" method="POST" class="d-inline" autocomplete="on">
                                 <input type="hidden" name="attId" value="{{row[0]}}">
                                 <button type="submit" name="delete" class="btn btn-danger btn-sm">Delete</button>
                             </form>
