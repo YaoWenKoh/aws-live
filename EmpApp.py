@@ -174,9 +174,10 @@ def updateAtt():
     date = request.form['date']
     check_in = request.form['checkIn']
 
-    today = datetime.today()
-    check_out = today.strftime("%H:%M:%S")
+    today = datetime.today.now()
+    check_out = today.strftime("%X")
     check_out = str(check_out)
+    print(check_out)
 
     update_sql = "UPDATE attendance SET emp_id ='" + emp_id + "', name ='" + name + "', date ='" + date + "', check_in ='" + check_in + "', check_out ='" + check_out + "' WHERE att_id ='" + att_id + "'"
     cursor = db_conn.cursor()
