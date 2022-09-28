@@ -108,7 +108,7 @@ def viewEmployee():
         cursor.execute(sql_query)
         employee = list(cursor.fetchone())
         cursor.close()
-        return render_template('viewemployee.html', employee = employee)
+        return render_template('employee.html', employee = employee)
     except Exception as e:
         return str(e)
 
