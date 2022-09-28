@@ -114,7 +114,7 @@ def addemp():
                     s3_location,
                     custombucket,
                     image_file_name_in_s3)
-                flash("Certificate added successfully!")
+                flash("Profile added successfully!")
 
         except Exception as e:
                 return str(e)
