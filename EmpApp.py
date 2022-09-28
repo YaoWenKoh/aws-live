@@ -18,6 +18,9 @@ Session(app)
 # For Flash #
 app.secret_key = "secret" 
 
+s3 = boto3.resource('s3')
+s3_client = boto3.client('s3')
+
 bucket = custombucket
 region = customregion
 
@@ -34,6 +37,10 @@ table = 'employee'
 
 employee_id = 1001
 attendance_id = 1
+
+def get_file_extension(filename):
+    if '.' in filename:
+        return filename.rsplit('.', 1)[1].lower()
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -85,18 +92,38 @@ def AddEmp():
     phone_number = request.form["empPhoneNumber"]
     pri_skill = request.form['empPriSkill']
     location = request.form['empLocation']
+    profile = request.form['profile']
 
-    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s, %s, %s,)"
     cursor = db_conn.cursor()
-
+    
     try:
+        image_file_name_in_s3 = "cert/" + str(session["id"]) + "_image_file" + str(emp_id) + get_file_extension(profile.filename)
         cursor.execute(insert_sql, (emp_id, name, email, password, phone_number, pri_skill, location))
         db_conn.commit()
+        try:
+            print("Data inserted in MySQL RDS... uploading image to S3...")
+            s3.Bucket(custombucket).put_object(Key=image_file_name_in_s3, Body=profile)
+            bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+            s3_location = (bucket_location['LocationConstraint'])
+            if s3_location is None:
+                s3_location = ''
+            else:
+                s3_location = '-' + s3_location
+                object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                    s3_location,
+                    custombucket,
+                    image_file_name_in_s3)
+                flash("Certificate added successfully!")
+
+        except Exception as e:
+                return str(e)
+
     finally:
         cursor.close()
 
     print("all modification done...")
-    return render_template('index.html')
+    return render_template('employee.html')
 
 @app.route("/viewEmployee", methods=['GET', 'POST'])
 def viewEmployee():
@@ -107,6 +134,13 @@ def viewEmployee():
     try: 
         cursor.execute(sql_query)
         employee = list(cursor.fetchone())
+        public_url = s3_client.generate_presigned_url('get_object', 
+                                                                Params = {'Bucket': custombucket, 
+                                                                            'Key': employee[4]})
+
+        employee.append(public_url)
+        employee.append("checked")
+
         cursor.close()
         return render_template('viewemployee.html', employee = employee)
     except Exception as e:
