@@ -92,7 +92,7 @@ def AddEmp():
     phone_number = request.form["empPhoneNumber"]
     pri_skill = request.form['empPriSkill']
     location = request.form['empLocation']
-    profile = request.form['profile']
+    profile = request.files['profile']
 
     insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s, %s, %s,)"
     cursor = db_conn.cursor()
@@ -376,6 +376,7 @@ def login():
 
 @app.route("/portfolio")
 def portfolio():
+
     return render_template('portfolio.html')
 
 @app.route("/logout")
