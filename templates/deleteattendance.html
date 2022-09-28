@@ -1,13 +1,14 @@
 {% include 'header.html' %}
 
 <body>
-    <h4>Update Attandance</h4>
+    <h4>Delete Attandance</h4>
 
     <div class="col-md-11 shadow rounded m-5 bg-white">
-        <form action="/updateAtt" autocomplete="on" method="POST">
+        <form action="/deleteAtt" autocomplete="on" method="POST">
             {% if attendance %}
-            <div>
-                <input type="hidden" name="attId" value="{{attendance[0]}}" readonly>
+            <div class="m-5 pt-5">
+                <label for="attId">Attendance ID</label>
+                <input type="text" class="form-control" name="attId" value="{{attendance[0]}}" readonly>
             </div>
             <div class="m-5 pt-5">
                 <label for="empId">Employee ID</label>
@@ -22,8 +23,8 @@
                 <input type="text" name="date" value="{{attendance[3]}}" readonly>
             </div>
             <div class="m-5">
-                <label for="check">Check-In Time</label>
-                <input type="text" name="checkIn" value="{{attendance[4]}}" readonly>
+                <label for="currentDate">Check-In Time</label>
+                <input type="text" name="checkOut" value="{{attendance[4]}}" readonly>
             </div>
             <div class="m-5">
                 <label for="checkOut">Check-Out Time</label>

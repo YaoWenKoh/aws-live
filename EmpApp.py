@@ -191,6 +191,20 @@ def updateAtt():
     print("all modification done...")
     return render_template('attendance.html')
 
+@app.route("/deleteAttendance", methods=['GET', 'POST'])
+def deleteAttendance():
+    att_id = request.form['attId']
+
+    sql_query = "SELECT * FROM attendance WHERE att_id = '" + att_id + "'"
+    cursor = db_conn.cursor()
+    try: 
+        cursor.execute(sql_query)
+        attendance = list(cursor.fetchone())
+        cursor.close()
+        return render_template('updateattendance.html', attendance = attendance)
+    except Exception as e:
+        return str(e)
+        
 @app.route("/deleteAtt", methods=['GET','POST'])
 def deleteAtt():
 
