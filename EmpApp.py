@@ -144,7 +144,7 @@ def deleteEmployee():
         cursor.execute(sql_query)
         employee = list(cursor.fetchone())
         cursor.close()
-        return redirect(url_for('employee', employee = employee))
+        return render_template('employee.html', employee = employee)
     except Exception as e:
         return str(e)
 
@@ -268,7 +268,7 @@ def deleteAttendance():
         cursor.execute(sql_query)
         attendance = list(cursor.fetchone())
         cursor.close()
-        return redirect(url_for('Attendance', attendance = attendance))
+        return render_template('attendance.html', attendance = attendance)
     except Exception as e:
         return str(e)
 
