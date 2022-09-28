@@ -127,11 +127,11 @@
                                 <input type="hidden" name="empId" value="{{row[0]}}">
                                 <button type="submit" name="view" class="btn btn-secondary btn-sm">View</button>
                             </form>
-                            <form action="/updateEmployee" method="POST" id="updateEmployee" autocomplete="on">
+                            <form action="/updateEmployee" method="POST" class="d-inline" autocomplete="on">
                                 <input type="hidden" name="empId" value="{{row[0]}}">
                                 <button type="submit" name="update" class="btn btn-warning btn-sm">Update</button>
                             </form>
-                            <form action="/deleteEmp" method="POST" id="deleteEmp" autocomplete="on">
+                            <form action="/deleteEmp" method="POST" class="d-inline" autocomplete="on">
                                 <input type="hidden" name="empId" value="{{row[0]}}">
                                 <button type="submit" name="delete" class="btn btn-danger btn-sm">Delete</button>
                             </form>
