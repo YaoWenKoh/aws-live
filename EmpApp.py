@@ -312,7 +312,7 @@ def viewAttendance():
         cursor.execute(sql_query)
         attendance = list(cursor.fetchone())
         cursor.close()
-        return render_template('attendance.html', attendance = attendance)
+        return render_template('viewattendance.html', attendance = attendance)
     except Exception as e:
         return str(e)            
 
