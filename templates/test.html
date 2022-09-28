@@ -96,41 +96,42 @@
             <div class="table-title">
                 <div class="row">
                     <div class="col-sm-8">
-                        <h2>Attendance List</h2>
+                        <h2>Employee List</h2>
                     </div>
                     <div class="col-sm-4 mr-1 mt-2">
-                        <a href="/addattendance" class="btn btn-info add-new"><i class="fa fa-plus"></i>Add New</a>
+                        <a href="/addEmployee" class="btn btn-info add-new"><i class="fa fa-plus"></i>Add New</a>
                     </div>
                 </div>
             </div>
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th class="col-md-2">Attendance ID</th>
                         <th class="col-md-3">Employee ID</th>
                         <th class="col-md-5">Employee Name</th>
-                        <th class="col-md-2">Date</th>
-                        <th class="col-md-2">Check In Time</th>
-                        <th class="col-md-2">Check Out Time</th>
+                        <th class="col-md-2">Email</th>
                         <th class="col-md-2">Function</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% for row in attendances %}
+                    {% for row in employees %}
                     <tr>
                         <td>{{row[0]}}</td>
                         <td>{{row[1]}}</td>
                         <td>{{row[2]}}</td>
-                        <td>{{row[3]}}</td>
-                        <td>{{row[4]}}</td>
-                        <td>{{row[5]}}</td>
-                        <td>{{row[6]}}</td>
                         <td>
-                            <form action="/updateAttendance" method="POST" id="updateAttendance" autocomplete="on">
-                                <input type="hidden" name="attId" value="{{row[0]}}">
+                            <form action="/addEmployee" method="POST" id="addEmployee" autocomplete="on">
+                                <input type="hidden" name="empId" value="{{row[0]}}">
+                                <button type="submit" name="delete">Attendance</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="/updateEmployee" method="POST" id="updateEmployee" autocomplete="on">
+                                <input type="hidden" name="empId" value="{{row[0]}}">
                                 <button type="submit" name="update">Update</button>
                             </form>
-                            <form action="/deleteAtt" method="POST" id="deleteAtt" autocomplete="on">
+                        </td>
+                        <td>
+                            <form action="/deleteEmployee" method="POST" id="deleteEmployee" autocomplete="on">
                                 <input type="hidden" name="attId" value="{{row[0]}}">
                                 <button type="submit" name="delete">Delete</button>
                             </form>
