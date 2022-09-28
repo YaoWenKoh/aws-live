@@ -136,7 +136,7 @@ def viewEmployee():
         employee = list(cursor.fetchone())
         public_url = s3_client.generate_presigned_url('get_object', 
                                                                 Params = {'Bucket': custombucket, 
-                                                                            'Key': employee[4]})
+                                                                            'Key': employee[7]})
 
         employee.append(public_url)
         employee.append("checked")
