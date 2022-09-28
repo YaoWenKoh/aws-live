@@ -99,7 +99,7 @@
                         <h2>Attendance List</h2>
                     </div>
                     <div class="col-sm-4 mr-1 mt-2">
-                        <a href="/addAttendance" class="btn btn-info add-new"><i class="fa fa-plus"></i>Add New</a>
+                        <a href="/addAttendance" class="btn btn-info add-new"><i class="fa fa-plus"></i>Check-In</a>
                     </div>
                 </div>
             </div>
@@ -127,13 +127,13 @@
                         <td>
                             <form action="/updateAttendance" method="POST" id="updateAttendance" autocomplete="on">
                                 <input type="hidden" name="attId" value="{{row[0]}}">
-                                <button type="submit" name="update">Update</button>
+                                <button type="submit" name="update" class="btn btn-info btn-sm">Update</button>
                             </form>
                         </td>
                         </td>
                             <form action="/deleteAttendance" method="POST" id="deleteAttendance" autocomplete="on">
                                 <input type="hidden" name="attId" value="{{row[0]}}">
-                                <button type="submit" name="delete">Delete</button>
+                                <button type="submit" name="delete" class="btn btn-info btn-sm">Delete</button>
                             </form>
                         </td>
                     </tr>
