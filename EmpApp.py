@@ -374,7 +374,9 @@ def login():
             return str(e)
     return render_template('login.html')
 
-
+@app.route("/portfolio")
+def portfolio():
+    return render_template('portfolio.html')
 
 @app.route("/logout")
 def logout():
