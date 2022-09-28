@@ -207,7 +207,7 @@ def deleteEmp():
             cursor.execute(sql_query)
             db_conn.commit()
             cursor.close()
-            return render_template('employee.html')
+            return redirect('/employee')
         except Exception as e:
             return str(e)
 
@@ -332,7 +332,7 @@ def deleteAtt():
             cursor.execute(sql_query)
             db_conn.commit()
             cursor.close()
-            return render_template('attendance.html')
+            return redirect('attendance')
         except Exception as e:
             return str(e)
 
