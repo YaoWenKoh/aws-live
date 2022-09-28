@@ -184,7 +184,7 @@ def Attendance():
 
 @app.route("/addAttendance", methods=['GET', 'POST'])
 def addAttendance():
-    emp_id = request.form['empId']
+    emp_id = session['id']
     
     sql_query = "SELECT * FROM employee WHERE emp_id = '" + emp_id + "'"
     cursor = db_conn.cursor()

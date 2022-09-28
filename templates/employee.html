@@ -127,9 +127,7 @@
                                 <input type="hidden" name="empId" value="{{row[0]}}">
                                 <button type="submit" name="update" class="btn btn-success btn-sm">Update</button>
                             </form>
-                        </td>
-                        <td>
-                            <form action="/deleteEmployee" method="POST" id="deleteEmployee" autocomplete="on">
+                            <form action="/deleteEmp" method="POST" id="deleteEmp" autocomplete="on">
                                 <input type="hidden" name="empId" value="{{row[0]}}">
                                 <button type="submit" name="delete" class="btn btn-danger btn-sm">Delete</button>
                             </form>
