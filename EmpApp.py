@@ -150,7 +150,6 @@ def deleteEmployee():
 
 @app.route("/deleteEmp", methods=['GET','POST'])
 def deleteEmp():
-
         emp_id = request.form['empId']
 
         sql_query = "DELETE FROM employee WHERE emp_id = '" + emp_id + "'"
