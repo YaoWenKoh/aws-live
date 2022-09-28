@@ -1,0 +1,42 @@
+{% include 'header.html' %}
+
+<body>
+    <h4>Delete Employee</h4>
+
+    <div class="col-md-11 shadow rounded m-5 bg-white">
+        <form action="/deleteEmp" autocomplete="on" method="POST">
+            {% if employee %}
+            <div class="m-5 pt-5">
+                <label for="empId">Employee ID</label>
+                <input type="text" class="form-control" name="empId" value="{{employee[0]}}" readonly>
+            </div>
+            <div class="m-5">
+                <label for="empName">Employee Name</label>
+                <input type="text" class="form-control" name="empName" value="{{employee[1]}}" readonly>
+            </div>
+            <div class="m-5">
+                <label for="email">Email</label>
+                <input type="text" name="date" value="{{employee[3]}}" readonly>
+            </div>
+            <div class="m-5">
+                <label for="password">Password</label>
+                <input type="text" name="checkIn" value="{{employee[4]}}" readonly>
+            </div>
+            <div class="m-5">
+                <label for="phoneNumber">Phone Number</label>
+                <input type="text" name="checkOut" value="{{employee[5]}}" readonly>
+            </div>
+            <div class="m-5">
+                <label for="priSkill">Primary Skill</label>
+                <input type="text" name="checkOut" value="{{employee[6]}}" readonly>
+            </div>
+            <div class="m-5">
+                <label for="location">Location</label>
+                <input type="text" name="checkOut" value="{{employee[7]}}" readonly>
+            </div>
+            <button type="submit" class="btn btn-primary m-5">Delete</button>
+            {% endif %}
+        </form>
+    </div>
+</body>
+{% include 'footer.html' %}

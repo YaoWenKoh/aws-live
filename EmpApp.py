@@ -1,4 +1,6 @@
 from crypt import methods
+import email
+import re
 from unicodedata import name
 from flask import Flask, render_template, request, redirect, session, flash, url_for
 from pymysql import connections
@@ -95,6 +97,72 @@ def AddEmp():
 
     print("all modification done...")
     return render_template('index.html')
+
+@app.route("/updateEmployee", methods=['GET', 'POST'])
+def updateEmployee():
+    emp_id = request.form['empId']
+
+    sql_query = "SELECT * FROM employee WHERE emp_id = '" + emp_id + "'"
+    cursor = db_conn.cursor()
+    try: 
+        cursor.execute(sql_query)
+        employee = list(cursor.fetchone())
+        cursor.close()
+        return render_template('updateemployee.html', employee = employee)
+    except Exception as e:
+        return str(e)
+
+@app.route("/updateEmp", methods=['GET','POST'])
+def updateEmp():
+    emp_id = request.form['empId']
+    name = request.form['empName']
+    email = request.form['email']
+    password = request.form['password']
+    phoneNumber = request.form['phoneNumber']
+    pri_skill = request.form['priSkill']
+    location =  request.form['location']
+
+    update_sql = "UPDATE attendance SET  name ='" + name + "', email ='" + email + "', password ='" + password + "', phoneNumber ='" + phoneNumber + "', priSkill ='" + pri_skill + "', location ='" + location + "' WHERE emp_id ='" + emp_id + "'"
+    cursor = db_conn.cursor()
+
+    try:
+        cursor.execute(update_sql)
+        db_conn.commit()
+    finally:
+        cursor.close()
+
+    print("all modification done...")
+    return redirect(url_for('Employee'))
+
+@app.route("/deleteEmployee", methods=['GET', 'POST'])
+def deleteEmployee():
+    emp_id = request.form['empId']
+
+    sql_query = "SELECT * FROM employee WHERE emp_id = '" + emp_id + "'"
+    cursor = db_conn.cursor()
+    try: 
+        cursor.execute(sql_query)
+        employee = list(cursor.fetchone())
+        cursor.close()
+        return redirect(url_for('Employee', employee = employee))
+    except Exception as e:
+        return str(e)
+
+@app.route("/deleteEmp", methods=['GET','POST'])
+def deleteEmp():
+
+        emp_id = request.form['empId']
+
+        sql_query = "DELETE FROM employee WHERE emp_id = '" + emp_id + "'"
+        cursor = db_conn.cursor()
+
+        try:
+            cursor.execute(sql_query)
+            db_conn.commit()
+            cursor.close()
+            return render_template('employee.html')
+        except Exception as e:
+            return str(e)
 
 @app.route("/attendance", methods=['GET','POST'])
 def Attendance():
