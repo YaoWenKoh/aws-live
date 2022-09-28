@@ -94,18 +94,11 @@ def addemp():
     location = request.form['empLocation']
     profile = request.files['profile']
 
-    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s, %s, %s,)"
+    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
     cursor = db_conn.cursor()
     
     try:
         image_file_name_in_s3 = "employee/_image_file" + str(emp_id) + get_file_extension(profile.filename)
-        print(type(emp_id))
-        print(type(name))
-        print(type(email))
-        print(type(password))
-        print(type(phone_number))
-        print(type(pri_skill))
-        print(type(location))
         cursor.execute(insert_sql, (emp_id, name, email, password, phone_number, pri_skill, location, image_file_name_in_s3))
         db_conn.commit()
         try:
