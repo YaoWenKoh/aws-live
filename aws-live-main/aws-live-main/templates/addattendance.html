@@ -1,0 +1,35 @@
+{% include 'header.html' %}
+
+<body>
+    <h4>Attandance</h4>
+    <div class="col-md-11 shadow rounded m-5 bg-white">
+        {% if employee %}
+        <form action="/addAtt" autocomplete="on" method="POST">
+            <div class="m-5 pt-5">
+                <label for="empId">Employee ID</label>
+                <input type="text" class="form-control" name="empId" value="{{employee[0]}}" readonly>
+            </div>
+            <div class="m-5">
+                <label for="empName">Employee Name</label>
+                <input type="text" class="form-control" name="empName" value="{{employee[1]}}" readonly>
+            </div>
+            <div class="m-5">
+                <label for="currentDate">Current Date</label>
+                <script>
+                    date = new Date().toLocaleDateString();
+                    document.write(date);
+                </script>
+            </div>
+            <div class="m-5">
+                <label for="currentTime">Current Time</label>
+                <script>
+                    time = new Date().toLocaleTimeString();
+                    document.write(time);
+                </script>
+            </div>
+            <button type="submit" class="btn btn-primary m-5">Submit</button>
+        </form>
+        {% endif %}
+    </div>
+</body>
+{% include 'footer.html' %}

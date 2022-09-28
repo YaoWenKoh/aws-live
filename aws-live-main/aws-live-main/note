@@ -1,0 +1,3 @@
+    #use session for get the user id and name
+    emp_id = session['id']
+    name = session['name']
