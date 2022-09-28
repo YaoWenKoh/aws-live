@@ -1,22 +1,31 @@
 {% include 'header.html' %}
-{% if cert %}
+{% if employee %}
 <div class="col-md-11 shadow rounded m-5 bg-white">
     <div class="m-5 pt-5">
-        <label for="dateTitle"><b>Date upload:</b></label>
-        <label for="datetime">{{cert[3]}}</label>
+        <label for="empId">Employee ID</label>
+        <input type="text" class="form-control" name="empId" value="{{employee[0]}}" readonly>
+    </div>
+    <div class="m-5 pt-5">
+        <label for="empName">Employee Name</label>
+        <input type="text" class="form-control" name="empName" value="{{employee[1]}}" readonly>
+    </div>
+    <div class="m-5 pt-5">
+        <label for="email">Email</label>
+        <input type="text" name="email" value="{{employee[2]}}" readonly>
+    </div>
+    <div class="m-5 pt-5">
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text" name="phoneNumber" value="{{employee[4]}}" readonly>
     </div>
     <div class="m-5">
-        <label for="certNameTitle"><b>Certification Name:</b></label>
-        <label for="certName">{{cert[1]}}</label>
+        <label for="pri_skill">Primary Skill</label>
+        <input type="text" name="pri_skill" value="{{employee[5]}}" readonly>
     </div>
     <div class="m-5">
-        <label for="certDescTitle"><b>Certification Description:</b></label>
-        <label for="certDesc">{{cert[2]}}</label>
+        <label for="location">Location</label>
+        <input type="text" name="location" value="{{employee[6]}}" readonly>
     </div>
-    <div class="m-5">
-        <a href="{{cert[6]}}"><img src={{cert[6]}} style="width: 450px"></a>
-    </div>
-    <a href="/certificate" class="btn btn-danger m-5">Back</a>
+    <a href="/employee" class="btn btn-danger m-5">Back</a>
 </div>
 {% endif %}
 {% include 'footer.html' %}
