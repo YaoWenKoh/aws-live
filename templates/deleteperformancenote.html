@@ -1,0 +1,33 @@
+{% include 'header.html' %}
+{% if pn %}
+<div class="col-md-11 shadow rounded m-5 bg-white">
+    <div class="m-5 pt-5">
+        <label for="dateTitle"><b>Date upload:</b></label>
+        <label for="datetime">{{pn[3]}}</label>
+    </div>
+    <div class="m-5">
+        <label for="pnIDTitle"><b>Performance Note ID:</b></label>
+        <label for="pnID">{{pn[0]}}</label>
+    </div>
+    <div class="m-5">
+        <label for="pnTitleTitle"><b>performance Note Title:</b></label>
+        <label for="pnTitle">{{pn[1]}}</label>
+    </div>
+    <div class="m-5">
+        <label for="pnDescTitle"><b>Perforemance Note Description:</b></label>
+        <label for="pnDesc">{{pn[2]}}</label>
+    </div>
+    <div class="m-5">
+        <label for="pnDescTitle"><b>Resolver/Owners:</b></label>
+        <label for="pnDesc">{{employee[1]}}</label>
+    </div>
+    <div class="m-5 pb-5">
+        <form action="/deleteperformancenote" method="POST">
+            <input type="hidden" name="pnId" value="{{pn[0]}}">
+            <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+            <a href="/performancenote" class="btn btn-danger float-right">Back</a>
+        </form>
+    </div>
+</div>
+{% endif %}
+{% include 'footer.html' %}

@@ -387,6 +387,370 @@ def portfolio():
         picList.append(public_url)
     return render_template('portfolio.html', picList = picList)
 
+@app.route("/certificate", methods=['GET','POST'])
+def certificate():
+    sql_query = "SELECT * FROM certificate WHERE emp_id ='"+ session["id"] +"'"
+    cursor = db_conn.cursor()
+    try:
+        cursor.execute(sql_query)
+        records = list(cursor.fetchall())
+
+        certificate = []
+        for rows in records:
+            certificate.append(list(rows))
+        cursor.close()
+        return render_template('certificate.html', certificate = certificate)
+    except Exception as e:
+        return str(e)
+
+@app.route("/viewcertificate", methods=['GET','POST'])
+def viewcertificate():
+    if request.method == "POST":
+        certid = request.form['certId']
+        sql_query = "SELECT * FROM certificate WHERE certificateID ='"+ certid +"'"
+        cursor = db_conn.cursor()
+        try:
+            cursor.execute(sql_query)
+            cert = list(cursor.fetchone())
+
+            public_url = s3_client.generate_presigned_url('get_object', 
+                                                                Params = {'Bucket': custombucket, 
+                                                                            'Key': cert[4]})
+
+            cert.append(public_url)
+            cert.append("checked")
+
+            cursor.close()
+
+            return render_template('viewcertificate.html', cert = cert)
+        except Exception as e:
+            return str(e)
+    else:
+        return redirect("/certificate")
+
+@app.route("/addcertificate", methods=['GET','POST'])
+def addcertificate():
+    if request.method == "POST":
+        cName = request.form.get("certName")
+        cDesc = request.form.get("certDesc")
+        cDateTime =  str(datetime.now().strftime("%Y-%m-%d"))
+        cFile = request.files["myCert"]
+
+        if cFile.filename == "":
+            return "Please select a image file"
+
+        sql_query = "SELECT * FROM certificate"
+        cursor = db_conn.cursor()
+        try:
+            cursor.execute(sql_query)
+            records = cursor.fetchall()
+            cID =  int(len(records)) + 1
+        except Exception as e:
+            return str(e)
+
+        sql_query = "INSERT INTO certificate VALUES (%s, %s, %s, %s, %s, %s)"
+
+        try:
+            image_file_name_in_s3 = "cert/" + str(session["id"]) + "_image_file" + str(cID) + get_file_extension(cFile.filename)
+            cursor.execute(sql_query, (cID, cName, cDesc, cDateTime, image_file_name_in_s3, session["id"]))
+            db_conn.commit()
+
+            try:
+                print("Data inserted in MySQL RDS... uploading image to S3...")
+                s3.Bucket(custombucket).put_object(Key=image_file_name_in_s3, Body=cFile)
+                bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+                s3_location = (bucket_location['LocationConstraint'])
+
+                if s3_location is None:
+                    s3_location = ''
+                else:
+                    s3_location = '-' + s3_location
+
+                object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                    s3_location,
+                    custombucket,
+                    image_file_name_in_s3)
+
+            except Exception as e:
+                return str(e)
+
+        except Exception as e:
+            return str(e)
+
+        finally:
+            cursor.close()
+            return redirect("/certificate")
+
+    return render_template('addcertificate.html')
+
+@app.route("/deletecertificate", methods=['GET','POST'])
+def deletecertificate():
+    if request.method == "POST":
+        cID = request.form['certId']
+        sql_query = "SELECT * FROM certificate WHERE certificateID ='"+ cID+"'"
+        cursor = db_conn.cursor()
+
+        try:
+            try:
+                cursor.execute(sql_query)
+                cert = list(cursor.fetchone())
+                s3.Object(custombucket, cert[4]).delete()
+            except Exception as e:
+                return str(e)
+            sql_query = "DELETE FROM certificate WHERE certificateID ='"+ cID+"'"
+            cursor.execute(sql_query)
+            db_conn.commit
+            cursor.close()
+            return redirect("/certificate")
+        except Exception as e:
+            return str(e)
+    else:
+        return redirect("/certificate")
+
+@app.route("/deletecertificateconfirmation", methods=['GET','POST'])
+def deletecertificateconfirmation():
+    if request.method == "POST":
+        cID = request.form['certId']
+        sql_query = "SELECT * FROM certificate WHERE certificateID ='"+ cID+"'"
+        cursor = db_conn.cursor()
+
+        try:
+            cursor.execute(sql_query)
+            cert = list(cursor.fetchone())
+            #s3.Object(custombucket, cert[4]).delete()
+            public_url = s3_client.generate_presigned_url('get_object', 
+                                                                Params = {'Bucket': custombucket, 
+                                                                            'Key': cert[4]})
+            cert.append(public_url)
+            cert.append("checked")
+            cursor.close()
+            return render_template('deletecertificate.html', cert = cert)
+        except Exception as e:
+            return str(e)
+    else:
+        return redirect("/certificate")
+
+@app.route("/modifycertificateconfirmation", methods=['GET','POST'])
+def modifycertificateconfirmation():
+    if request.method == "POST":
+        cID = request.form['certId']
+        sql_query = "SELECT * FROM certificate WHERE certificateID ='"+ cID+"'"
+        cursor = db_conn.cursor()
+
+        try:
+            cursor.execute(sql_query)
+            cert = list(cursor.fetchone())
+            #s3.Object(custombucket, cert[4]).delete()
+            public_url = s3_client.generate_presigned_url('get_object', 
+                                                                Params = {'Bucket': custombucket, 
+                                                                            'Key': cert[4]})
+            cert.append(public_url)
+            cert.append("checked")
+            cursor.close()
+            return render_template('modifycertificate.html', cert = cert)
+        except Exception as e:
+            return str(e)
+    else:
+        return redirect("/certificate")
+
+@app.route("/modifycertificate", methods=['GET','POST'])
+def modifycertificate():
+    if request.method == "POST":
+        cID = request.form['certId']
+        cName = request.form['certName']
+        cDesc = request.form['certDesc']
+        cFile = request.files['myCert']
+        sql_query = "SELECT * FROM certificate WHERE certificateID ='"+ cID+"'"
+        cursor = db_conn.cursor()
+
+        try:
+            cursor.execute(sql_query)
+            cert = list(cursor.fetchone())
+            public_url = s3_client.generate_presigned_url('get_object', 
+                                                                Params = {'Bucket': custombucket, 
+                                                                            'Key': cert[4]})
+            cert.append(public_url)
+            cert.append("checked")
+        except Exception as e:
+            return str(e)
+        sql_query = "UPDATE certificate SET certificateName='"+ cName +"', certificateDesc='"+ cDesc+"' WHERE emp_id='"+ session["id"] +"' and certificateID='"+ cID+"'"
+        if(cFile.filename != ""):
+            try:
+                cursor.execute(sql_query)
+                db_conn.commit()
+                try:
+                    s3.Object(custombucket, cert[4]).delete()
+                    print("Data inserted in MySQL RDS... uploading image to S3...")
+                    s3.Bucket(custombucket).put_object(Key=cert[4], Body=cFile)
+                    bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+                    s3_location = (bucket_location['LocationConstraint'])
+
+                    if s3_location is None:
+                        s3_location = ''
+                    else:
+                        s3_location = '-' + s3_location
+
+                    object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                        s3_location,
+                        custombucket,
+                        cert[4])
+
+                    flash("Certificate added successfully!")
+
+                except Exception as e:
+                    return str(e)
+            except Exception as e:
+                return str(e)
+        else:
+            cursor.execute(sql_query)
+            db_conn.commit()
+
+        cursor.close()
+        return redirect("/certificate")
+    else:
+        return redirect("/certificate")
+
+@app.route("/addemp", methods=['POST'])
+def AddEmp():
+    emp_id = request.form['emp_id']
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    pri_skill = request.form['pri_skill']
+    location = request.form['location']
+    emp_image_file = request.files['emp_image_file']
+
+    insert_sql = "INSERT INTO employee VALUES (%s, %s, %s, %s, %s)"
+    cursor = db_conn.cursor()
+
+    if emp_image_file.filename == "":
+        return "Please select a file"
+
+    try:
+
+        cursor.execute(insert_sql, (emp_id, first_name, last_name, pri_skill, location))
+        db_conn.commit()
+        emp_name = "" + first_name + " " + last_name
+        # Uplaod image file in S3 #
+        emp_image_file_name_in_s3 = "emp-id-" + str(emp_id) + "_image_file"
+        s3 = boto3.resource('s3')
+
+        try:
+            print("Data inserted in MySQL RDS... uploading image to S3...")
+            s3.Bucket(custombucket).put_object(Key=emp_image_file_name_in_s3, Body=emp_image_file)
+            bucket_location = boto3.client('s3').get_bucket_location(Bucket=custombucket)
+            s3_location = (bucket_location['LocationConstraint'])
+
+            if s3_location is None:
+                s3_location = ''
+            else:
+                s3_location = '-' + s3_location
+
+            object_url = "https://s3{0}.amazonaws.com/{1}/{2}".format(
+                s3_location,
+                custombucket,
+                emp_image_file_name_in_s3)
+
+        except Exception as e:
+            return str(e)
+
+    finally:
+        cursor.close()
+
+    print("all modification done...")
+    return render_template('AddEmpOutput.html', name=emp_name)
+
+@app.route("/performancenote", methods=['GET','POST'])
+def performancenote():
+    sql_query = "SELECT * FROM performanceNote"
+    cursor = db_conn.cursor()
+    try:
+        cursor.execute(sql_query)
+        records = list(cursor.fetchall())
+
+        pn = []
+        for rows in records:
+            pn.append(list(rows))
+        cursor.close()
+        return render_template('performancenote.html', pn = pn)
+    except Exception as e:
+        return str(e)
+
+@app.route("/addperformancenote", methods=['GET','POST'])
+def addperformancenote():
+    if request.method == "POST":
+        pnTitle = request.form.get("pnTitle")
+        pnDesc = request.form.get("pnDesc")
+        pnDateTime =  str(datetime.now().strftime("%Y-%m-%d"))
+        pnOwner = request.form.get("empId")
+
+        sql_query = "SELECT * FROM performanceNote"
+        cursor = db_conn.cursor()
+        try:
+            cursor.execute(sql_query)
+            records = cursor.fetchall()
+            cursor.close()
+            pnID =  int(len(records)) + 1
+        except Exception as e:
+            return str(e)
+        sql_query = "INSERT INTO performanceNote VALUES (%s, %s, %s, %s, %s)"
+        cursor = db_conn.cursor()
+        try:
+            cursor.execute(sql_query, (pnID, pnTitle, pnDesc, pnDateTime, pnOwner))
+            db_conn.commit()
+            print("checkpoint1")
+        except Exception as e:
+            return str(e)
+
+        finally:
+            cursor.close()
+            return redirect("/performancenote")
+    else:
+        sql_query = "SELECT * FROM employee"
+        cursor = db_conn.cursor()
+        cursor.execute(sql_query)
+        records = cursor.fetchall()
+        cursor.close()
+        return render_template('addperformancenote.html', employees = records)
+
+@app.route("/deleteperformancenote", methods=['GET','POST'])
+def deleteperformancenote():
+    if request.method == "POST":
+        pnID = request.form['pnId']
+        sql_query = "DELETE FROM performanceNote WHERE pnID ='"+ pnID+"'"
+        cursor = db_conn.cursor()
+
+        try:
+            cursor.execute(sql_query)
+            db_conn.commit
+            cursor.close()
+            return redirect("/performancenote")
+        except Exception as e:
+            return str(e)
+    else:
+        return redirect("/performancenote")
+
+@app.route("/deleteperformancenoteconfirmation", methods=['GET','POST'])
+def deleteperformancenoteconfirmation():
+    if request.method == "POST":
+        pnID = request.form['pnId']
+        sql_query = "SELECT * FROM performanceNote WHERE pnID ='"+ pnID+"'"
+        cursor = db_conn.cursor()
+
+        try:
+            cursor.execute(sql_query)
+            record = list(cursor.fetchone())
+
+            sql_query = "SELECT * FROM employee WHERE emp_id='"+ record[4] +"'"
+            cursor.execute(sql_query)
+            employee = list(cursor.fetchone())
+
+            cursor.close()
+            return render_template('deleteperformancenote.html', pn = record, employee = employee)
+        except Exception as e:
+            return str(e)
+    else:
+        return redirect("/performancenote")
+
 @app.route("/logout")
 def logout():
     session["id"] = None
