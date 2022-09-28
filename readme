@@ -8,7 +8,7 @@ cd aws-live
 python3 EmpApp.py
 
 #putty connection
-ec2-user@ec2-54-242-187-235.compute-1.amazonaws.com
+ec2-user@ec2-44-211-160-151.compute-1.amazonaws.com
 
 #!/bin/bash
 yum update -y
