@@ -131,8 +131,8 @@ def addAttendance():
 
 @app.route("/addAtt", methods=['GET','POST'])
 def addAtt():
-    emp_id = request.form['empId']
-    name = request.form['empName']
+    emp_id = session["id"]
+    name = session["name"]
 
     today = datetime.today()
     date = today.strftime("%d/%m/%Y")
