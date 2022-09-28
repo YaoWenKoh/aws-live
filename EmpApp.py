@@ -302,6 +302,20 @@ def deleteAtt():
         except Exception as e:
             return str(e)
 
+@app.route("/viewAttendance", methods=['GET', 'POST'])
+def viewAttendance():
+    att_id = request.form['attId']
+
+    sql_query = "SELECT * FROM attendance WHERE att_id = '" + att_id + "'"
+    cursor = db_conn.cursor()
+    try: 
+        cursor.execute(sql_query)
+        attendance = list(cursor.fetchone())
+        cursor.close()
+        return render_template('attendance.html', attendance = attendance)
+    except Exception as e:
+        return str(e)            
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
       # if form is submited

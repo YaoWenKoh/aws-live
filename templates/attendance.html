@@ -125,6 +125,10 @@
                         <td>{{row[4]}}</td>
                         <td>{{row[5]}}</td>
                         <td>
+                            <form action="/viewAttendance" method="POST" class="d-inline">
+                                <input type="hidden" name="attId" value="{{row[0]}}">
+                                <button type="submit" name="view" class="btn btn-secondary btn-sm">View</button>
+                            </form>
                             <form action="/updateAttendance" method="POST" id="updateAttendance" autocomplete="on">
                                 <input type="hidden" name="attId" value="{{row[0]}}">
                                 <button type="submit" name="update" class="btn btn-warning btn-sm">Update</button>
