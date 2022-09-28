@@ -136,7 +136,7 @@ def addAtt():
 
     today = datetime.today()
     date = today.strftime("%d/%m/%Y")
-    check_in = today.strftime("%H:%M:%S")
+    check_in = today.strftime("%X")
     date = str(date)
     check_in = str(check_in)
 
