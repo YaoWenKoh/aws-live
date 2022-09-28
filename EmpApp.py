@@ -1,6 +1,6 @@
 from crypt import methods
 from unicodedata import name
-from flask import Flask, render_template, request, redirect, session, flash
+from flask import Flask, render_template, request, redirect, session, flash, url_for
 from pymysql import connections
 import os
 import boto3
@@ -189,7 +189,7 @@ def updateAtt():
         cursor.close()
 
     print("all modification done...")
-    return render_template('attendance.html')
+    return redirect(url_for('Attendance'))
 
 @app.route("/deleteAttendance", methods=['GET', 'POST'])
 def deleteAttendance():
@@ -204,7 +204,7 @@ def deleteAttendance():
         return render_template('updateattendance.html', attendance = attendance)
     except Exception as e:
         return str(e)
-        
+
 @app.route("/deleteAtt", methods=['GET','POST'])
 def deleteAtt():
 
