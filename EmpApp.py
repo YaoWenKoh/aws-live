@@ -178,7 +178,7 @@ def updateAtt():
     check_out = today.strftime("%H:%M:%S")
     check_out = str(check_out)
 
-    update_sql = "UPDATE attendance SET emp_id ='" + emp_id + "', emp_name ='" + name + "', date ='" + date + "', check_in ='" + check_in + "', check_out ='" + check_out + "' WHERE att_id ='" + att_id + "'"
+    update_sql = "UPDATE attendance SET emp_id ='" + emp_id + "', name ='" + name + "', date ='" + date + "', check_in ='" + check_in + "', check_out ='" + check_out + "' WHERE att_id ='" + att_id + "'"
     cursor = db_conn.cursor()
 
     try:
