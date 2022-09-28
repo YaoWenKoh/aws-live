@@ -107,8 +107,10 @@
                 <thead>
                     <tr>
                         <th class="col-md-3">Employee ID</th>
-                        <th class="col-md-5">Employee Name</th>
+                        <th class="col-md-2">Employee Name</th>
                         <th class="col-md-2">Email</th>
+                        <th class="col-md-2">Primary Skill</th>
+                        <th class="col-md-2">Location</th>
                         <th class="col-md-2">Function</th>
                     </tr>
                 </thead>
@@ -118,12 +120,8 @@
                         <td>{{row[0]}}</td>
                         <td>{{row[1]}}</td>
                         <td>{{row[2]}}</td>
-                        <td>
-                            <form action="/addEmployee" method="POST" id="addEmployee" autocomplete="on">
-                                <input type="hidden" name="empId" value="{{row[0]}}">
-                                <button type="submit" name="delete">Attendance</button>
-                            </form>
-                        </td>
+                        <td>{{row[5]}}</td>
+                        <td>{{row[6]}}</td>
                         <td>
                             <form action="/updateEmployee" method="POST" id="updateEmployee" autocomplete="on">
                                 <input type="hidden" name="empId" value="{{row[0]}}">

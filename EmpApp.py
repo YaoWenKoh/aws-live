@@ -132,7 +132,7 @@ def updateEmp():
         cursor.close()
 
     print("all modification done...")
-    return redirect(url_for('Employee'))
+    return redirect(url_for('employee'))
 
 @app.route("/deleteEmployee", methods=['GET', 'POST'])
 def deleteEmployee():
@@ -144,7 +144,7 @@ def deleteEmployee():
         cursor.execute(sql_query)
         employee = list(cursor.fetchone())
         cursor.close()
-        return redirect(url_for('Employee', employee = employee))
+        return redirect(url_for('employee', employee = employee))
     except Exception as e:
         return str(e)
 
