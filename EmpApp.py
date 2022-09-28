@@ -196,7 +196,7 @@ def deleteAtt():
 
         att_id = request.form['attId']
 
-        sql_query = "DELETE * FROM attendance WHERE att_id = '" + att_id + "'"
+        sql_query = "DELETE FROM attendance WHERE att_id = '" + att_id + "'"
         cursor = db_conn.cursor()
 
         try:
